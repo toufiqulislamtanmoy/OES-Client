@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useSingleQuiz from "../../Hooks/useSingleQuiz";
+import { AuthContext } from "../../Provider/AuthProviders";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const QuizDetails = () => {
     const { id } = useParams();
-    const { singleItem, loading } = useSingleQuiz(id);
+    const [axiosSecure] = useAxiosSecure();
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
+    const { singleItem } = useSingleQuiz(id);
 
     const correctAnswers = singleItem?.questions?.map(question => question.correctAnswer);
-
-    // console.log("Correct Answer Form Server: ",correctAnswers);
-
-
-
-    // const navigate = useNavigate();
 
     const [time, setTime] = useState(singleItem.totalTime);
 
@@ -44,19 +43,10 @@ const QuizDetails = () => {
 
     const { control, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
 
         const answerValues = Object.values(data);
-
-
-
-
-
-
         console.log('Selected Answers:', answerValues);
-
-
         const correctCount = correctAnswers.reduce((count, correctAnswer, index) => {
             if (answerValues[index] === correctAnswer) {
                 return count + 1;
@@ -64,7 +54,30 @@ const QuizDetails = () => {
             return count;
         }, 0);
 
-        console.log('Correct Answers Count:', correctCount);
+        const percentageCorrect = (correctCount / correctAnswers?.length) * 100;
+        const result = percentageCorrect >= 80 ? 'Pass' : 'Fail';
+        let points = 0;
+        if (result === "Pass") {
+            points = 20;
+
+        }
+        const quizResultDetails = {
+            participantEmail: user.email,
+            quizId: id,
+            correctAnswers: correctCount,
+            quizResult: result,
+            totalQuestion: correctAnswers?.length,
+            points,
+            dificultyLevel: singleItem?.Deficulty
+        }
+
+        const insertResponse = await axiosSecure.post('/participant', quizResultDetails);
+        if (insertResponse.data.insertedId) {
+
+            navigate('/quizscore', { state: { insertedId: insertResponse.data.insertedId } });
+        }
+
+
 
     };
 

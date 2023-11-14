@@ -9,6 +9,7 @@ import QuizDetails from "../Pages/QuizDetails/QuizDetails";
 import QuizScore from "../Pages/QuizScore/QuizScore";
 import PrivetRoute from "./PrivetRoute";
 import Signup from "../Pages/Authentication/Signup";
+import RankingList from "../Pages/RankingList/RankingList";
 
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/quizscore",
                 element: <PrivetRoute><QuizScore /></PrivetRoute>
+            },     
+            {
+                path: "/ranking",
+                element: <RankingList />
             },     
         ]
     },

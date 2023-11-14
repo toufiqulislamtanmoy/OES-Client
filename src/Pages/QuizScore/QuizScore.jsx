@@ -1,19 +1,40 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { useEffect, useState } from 'react';
 
 const QuizScore = () => {
-  const userScore = 4; // Replace with the actual user score
-  const totalQuestions = 5; // Replace with the total number of questions
+  const location = useLocation();
+  const insertedId = location.state?.insertedId;
+  const [axiosSecure] = useAxiosSecure();
+  const [quizScoreData, setQuizScoreData] = useState(null); // State to hold quiz score data
 
-  // Calculate the percentage
-  const percentage = (userScore / totalQuestions) * 100;
+  console.log('Inserted ID:', insertedId);
 
-  // Determine pass or fail
-  const passOrFail = percentage >= 80 ? 'Pass' : 'Fail';
+  // Create an asynchronous function to fetch quiz score data
+  const fetchData = async () => {
+    try {
+      const getResponse = await axiosSecure.get(`/quizscore/${insertedId}`);
+      setQuizScoreData(getResponse.data); // Set quiz score data in the state
+    } catch (error) {
+      console.error('Error fetching quiz score data:', error);
+    }
+  };
 
-  // Motivational messages
+  // Use useEffect to trigger the data fetching when the component mounts
+  useEffect(() => {
+    fetchData();
+  }, [insertedId]); // Run the effect when the insertedId changes
+
+
+  const passOrFail = "Pass";
+
+
+  console.log(quizScoreData);
+
+
   const motivationalMessage =
-    passOrFail === 'Pass'
+    quizScoreData?.quizResult === 'Pass'
       ? "🏆 Keep it up! Maintain your consistency."
       : "Don't worry, failure is a stepping stone to success. Keep learning and trying.";
 
@@ -22,21 +43,21 @@ const QuizScore = () => {
       <div className="bg-gray-200 p-4 rounded-md shadow-md text-center">
         <h2 className="text-2xl font-bold mb-4">Your Quiz Score</h2>
         <p className="text-lg">
-          You answered <span className="text-green-500 font-bold">{userScore}</span> out of{' '}
-          <span className="font-bold">{totalQuestions}</span> questions correctly.
+          You answered <span className="text-green-500 font-bold">{quizScoreData?.correctAnswers}</span> out of{' '}
+          <span className="font-bold">{quizScoreData?.totalQuestion}</span> questions correctly.
         </p>
         <p className="mt-4">
-          Result: <span className={percentage >= 80 ? 'text-green-500' : 'text-red-500'}>{passOrFail}</span>
+          Result: <span className={quizScoreData?.quizResult === "Pass" ? 'text-green-500' : 'text-red-500'}>{quizScoreData?.quizResult}</span>
         </p>
         <p className="mt-4">{motivationalMessage}</p>
-        
-        {/* Add a link to the ranking board */}
+
         {passOrFail === 'Pass' && (
           <Link to="/ranking" className="mt-4 inline-block btn btn-link px-4 py-2 rounded-md">
             View Ranking Board
           </Link>
         )}
       </div>
+
     </div>
   );
 };
