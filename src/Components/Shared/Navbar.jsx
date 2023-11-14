@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProviders";
 
 const Navbar = () => {
-    const {user} = useContext(AuthContext);
+    const {user,logout} = useContext(AuthContext);
+    const handelLogOut = async () => {
+        logout(); 
+        
+    }
+    console.log(user);
     const navitem = <>
         <li>
             <Link to="/">
@@ -49,7 +54,7 @@ const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <img src="https://i.ibb.co/x3LC9CX/user.png" />
+                                    <img src={user?.photoURL} />
                                 </div>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-primary rounded-box w-52">
@@ -60,7 +65,7 @@ const Navbar = () => {
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li><button onClick={handelLogOut}>Logout</button></li>
                             </ul>
                         </div>
                         :

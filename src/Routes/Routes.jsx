@@ -7,6 +7,8 @@ import Login from "../Pages/Authentication/Login";
 import Quiz from "../Pages/Quiz/Quiz";
 import QuizDetails from "../Pages/QuizDetails/QuizDetails";
 import QuizScore from "../Pages/QuizScore/QuizScore";
+import PrivetRoute from "./PrivetRoute";
+import Signup from "../Pages/Authentication/Signup";
 
 
 const router = createBrowserRouter([
@@ -24,16 +26,20 @@ const router = createBrowserRouter([
                 element: <Login />
             },     
             {
+                path: "/signup",
+                element: <Signup />
+            },     
+            {
                 path: "/quiz",
                 element: <Quiz />
             },     
             {
                 path: "/quizdetails/:id",
-                element: <QuizDetails />
+                element: <PrivetRoute><QuizDetails /></PrivetRoute>
             },     
             {
                 path: "/quizscore",
-                element: <QuizScore />
+                element: <PrivetRoute><QuizScore /></PrivetRoute>
             },     
         ]
     },

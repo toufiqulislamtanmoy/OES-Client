@@ -15,7 +15,7 @@ const Login = () => {
 
 
     // handel google login
-    const handelGoogleLogin = () => {
+    const handelgoogleLogin = () => {
         googleLogin().then((loggedInUser) => {
             // Signed in 
             const user = loggedInUser.user;
@@ -27,7 +27,7 @@ const Login = () => {
                 profile_pic: user.photoURL,
                 role: "user"
             }
-            fetch("https://e-shopy-server.vercel.app/users", {
+            fetch("http://localhost:5000/adduser", {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'
@@ -124,7 +124,7 @@ const Login = () => {
 
     }
     return (
-        <div className="hero min-h-screen my-16 lg:my-0 signin">
+        <div className="hero min-h-screen my-16 lg:my-0">
             <div className="hero-content flex-col lg:flex-row-reverse">
 
                 <div className="card flex-shrink-0 w-full ">
@@ -157,7 +157,7 @@ const Login = () => {
                         </form>
                         <div className="divider">OR</div>
                         <div>
-                            <button onClick={handelGoogleLogin} className="btn w-full my-1 bg-transparent border-2 border-gray-300"><FcGoogle className="text-2xl" /> Google</button>
+                            <button onClick={handelgoogleLogin} className="btn w-full my-1 bg-transparent border-2 border-gray-300"><FcGoogle className="text-2xl" /> Google</button>
                         </div>
                     </div>
                 </div>
