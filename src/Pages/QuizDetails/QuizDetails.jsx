@@ -63,6 +63,7 @@ const QuizDetails = () => {
         }
         const quizResultDetails = {
             participantEmail: user.email,
+            name: user.displayName,
             quizId: id,
             correctAnswers: correctCount,
             quizResult: result,
