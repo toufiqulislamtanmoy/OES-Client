@@ -1,12 +1,28 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../../Provider/AuthProviders";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AddQuiz = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const {user} = useContext(AuthContext);
+    const [axiosSecure] = useAxiosSecure();
 
     const onSubmit = data => {
-        console.log(data);
+        const quizData = {
+            ...data,
+            assignerEmail:user?.email,
+            assignedName: user?.displayName,
+            avatar: user?.photoURL,
+            questions:[],
+            status:false
+         };
+        console.log(quizData)
+
+        const response = axiosSecure.post("/addQuiz",quizData);
+        console.log(response.data);
     }
     return (
         <div className="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -38,18 +54,7 @@ const AddQuiz = () => {
                     {errors.totalTime && <span className="text-xs text-red-500">Did Not Add Total Time</span>}
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Assigned Name
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Enter Assigned Name Here"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        {...register('assignedName', { required: true })}
-                    />
-                    {errors.assignedName && <span className="text-xs text-red-500">Did Not Add Assigned Name</span>}
-                </div>
+        
 
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -66,18 +71,18 @@ const AddQuiz = () => {
 
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Quiz Type
+                        Quiz Category
                     </label>
                     <select
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        {...register('quizType', { required: true })}
+                        {...register('quizCategory', { required: true })}
                     >
-                        <option value="" disabled>Select Quiz Type</option>
-                        <option value="multipleChoice">Multiple Choice</option>
-                        <option value="trueFalse">True/False</option>
-                        <option value="shortAnswer">Short Answer</option>
+                        <option value="" disabled selected>Select Quiz Category</option>
+                        <option value="CSE">CSE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="BBA">BBA</option>
                     </select>
-                    {errors.quizType && <span className="text-xs text-red-500">Please Select Quiz Type</span>}
+                    {errors.quizCategory && <span className="text-xs text-red-500">Please Select Quiz Type</span>}
                 </div>
 
                 <div className="mb-4">
@@ -88,7 +93,7 @@ const AddQuiz = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         {...register('difficultyLevel', { required: true })}
                     >
-                        <option value="" disabled>Select Difficulty Level</option>
+                        <option value="" disabled selected>Select Difficulty Level</option>
                         <option value="easy">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>

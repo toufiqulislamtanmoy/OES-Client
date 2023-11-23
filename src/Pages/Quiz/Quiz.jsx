@@ -81,7 +81,7 @@ const Quiz = () => {
                         </div>
                         <div>
                             <div className="font-bold">{singleQuiz.assignedName}</div>
-                            <div className="text-sm text-gray-500">Professor</div>
+                            <div className="text-sm text-gray-500">{singleQuiz.designation}</div>
                         </div>
                     </div>
                 </td>
@@ -89,7 +89,7 @@ const Quiz = () => {
                     <div>
                         <span className="font-bold">{singleQuiz.quizTitle}</span>
                         <br />
-                        <span className="badge badge-ghost badge-sm">{singleQuiz.quizType}</span>
+                        <span className="badge badge-ghost badge-sm">{singleQuiz?.quizType ? singleQuiz?.quizType : singleQuiz?.quizCategory}</span>
                     </div>
                 </td>
                 <td className="py-4 px-4">{singleQuiz.Deficulty}</td>
