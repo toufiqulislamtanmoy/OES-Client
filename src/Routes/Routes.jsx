@@ -10,6 +10,9 @@ import QuizScore from "../Pages/QuizScore/QuizScore";
 import PrivetRoute from "./PrivetRoute";
 import Signup from "../Pages/Authentication/Signup";
 import RankingList from "../Pages/RankingList/RankingList";
+import AddQuiz from "../Pages/InstructorPanel/AddQuiz/AddQuiz";
+import ManageQuiz from "../Pages/InstructorPanel/ManageQuiz/ManageQuiz";
+import Dashboard from "../Layout/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -48,35 +51,27 @@ const router = createBrowserRouter([
             },     
         ]
     },
-    // {
-    //     path: "/dashboard",
-    //     element: <PrivetRoute><Dashboard /></PrivetRoute>,
-    //     errorElement: <NotFound/>,
-    //     children: [
-    //         {
-    //             path: "requestforbook",
-    //             element: <BrowBookRequestList />
-    //         },
-    //         {
-    //             path: "addbook",
-    //             element: <AddBooks />
-    //         },
-    //         {
-    //             path: "collectbook",
-    //             element: <CollectBooks />
-    //         },
-    //         {
-    //             path: "allbooks",
-    //             element: <AllBookList />
-    //         },
-    //         {
-    //             path: "updateBook/:id",
-    //             element: <UpdateBooks />
-    //         },
+    {
+        path: "/dashboard",
+        element: <PrivetRoute><Dashboard /></PrivetRoute>,
+        // errorElement: <NotFound/>,
+        children: [
+            {
+                path: "addQuiz",
+                element: <AddQuiz />
+            },
+            {
+                path: "manageQuiz",
+                element: <ManageQuiz />
+            }
+            // {
+            //     path: "collectbook",
+            //     element: <CollectBooks />
+            // }
 
-    //     ]
+        ]
 
-    // },
+    },
     // {
     //     path: "/userdashboard",
     //     element: <PrivetRoute><UserDashboard /></PrivetRoute>,

@@ -70,11 +70,11 @@ const AuthProviders = ({ children }) => {
             console.log("Current User From Auth Provider", currentUser);
             if (currentUser) {
                 axios.post('http://localhost:5000/jwt', { email: currentUser.email }).then(data => {
-                    localStorage.setItem("access-token", data.data.token);
+                    localStorage.setItem("quiz-token", data.data.token);
                     setloading(false);
                 })
             } else {
-                localStorage.removeItem("access-token");
+                localStorage.removeItem("quiz-token");
                 setloading(false);
             }
 

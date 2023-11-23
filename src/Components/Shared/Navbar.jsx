@@ -1,13 +1,32 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProviders";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Navbar = () => {
-    const {user,logout} = useContext(AuthContext);
+    const [axiosSecure] = useAxiosSecure();
+    const { user, logout } = useContext(AuthContext);
+    const [userRole, setUserRole] = useState(false);
     const handelLogOut = async () => {
-        logout(); 
-        
+        logout();
+
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosSecure.get(`/users/admin/${user?.email}`);
+                setUserRole(response.data)
+                console.log('User Data:', userRole);
+
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchData();
+    }, [user?.email, axiosSecure, userRole]);
+
     console.log(user);
     const navitem = <>
         <li>
@@ -54,15 +73,17 @@ const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <img src={user?.photoURL} />
+                                    <img src={user?.photoURL} title={user?.email} />
                                 </div>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-primary rounded-box w-52">
                                 <li>
-                                    <a className="justify-between">
-                                        Profile
-                                        <span className="badge">New</span>
-                                    </a>
+                                    { userRole?.admin &&
+                                        <Link to="/dashboard/addQuiz" className="justify-between">
+                                            Profile
+                                            <span className="badge">New</span>
+                                        </Link>
+                                    }
                                 </li>
                                 <li><a>Settings</a></li>
                                 <li><button onClick={handelLogOut}>Logout</button></li>
