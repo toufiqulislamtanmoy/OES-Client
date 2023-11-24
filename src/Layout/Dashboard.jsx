@@ -51,8 +51,8 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <Link
-                                className={`hover:text-white hover:bg-gray-500 hover:transition-colors hover:duration-500 ${location.pathname === '/manageQuiz' ? 'bg-gray-400 bg-opacity-40' : ''}`}
-                                to="/manageQuiz"><FontAwesomeIcon icon={faGraduationCap} /> Education Info
+                                className={`hover:text-white hover:bg-gray-500 hover:transition-colors hover:duration-500 ${location.pathname === '/dashboard/manageQuiz' ? 'bg-gray-400 bg-opacity-40' : ''}`}
+                                to="/dashboard/manageQuiz"><FontAwesomeIcon icon={faGraduationCap} /> Mange Quiz
                             </Link>
                         </li>
                      
