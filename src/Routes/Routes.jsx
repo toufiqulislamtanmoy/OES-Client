@@ -13,6 +13,7 @@ import RankingList from "../Pages/RankingList/RankingList";
 import AddQuiz from "../Pages/InstructorPanel/AddQuiz/AddQuiz";
 import ManageQuiz from "../Pages/InstructorPanel/ManageQuiz/ManageQuiz";
 import Dashboard from "../Layout/Dashboard";
+import MangeQuestion from "../Pages/InstructorPanel/ManageQuiz/MangeQuestion/MangeQuestion";
 
 
 const router = createBrowserRouter([
@@ -63,11 +64,11 @@ const router = createBrowserRouter([
             {
                 path: "manageQuiz",
                 element: <ManageQuiz />
+            },
+            {
+                path: "addquestions/:quizID",
+                element: <MangeQuestion />
             }
-            // {
-            //     path: "collectbook",
-            //     element: <CollectBooks />
-            // }
 
         ]
 

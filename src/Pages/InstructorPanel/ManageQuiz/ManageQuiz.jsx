@@ -43,7 +43,7 @@ const ManageQuiz = () => {
                                 <td className="py-4 px-4">{singleQuiz.assignerEmail}</td>
                                 <td className="py-4 px-4">
                                     {/* Add Question Button */}
-                                    <Link to="/dashboard/addquestions" className="">
+                                    <Link to={`/dashboard/addquestions/${singleQuiz._id}`} className="">
                                         <FontAwesomeIcon icon={faCirclePlus} className="text-white text-xl inline-block rounded-full p-3 bg-gradient-to-r from-blue-500 to-yellow-500 hover:from-green-500 hover:to-blue-500 transform hover:scale-110 transition-transform duration-300" />
                                     </Link>
 
