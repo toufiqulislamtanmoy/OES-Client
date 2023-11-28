@@ -37,7 +37,7 @@ const MangeQuestion = () => {
                         <div>
                             <strong>Options:</strong>
                             <ul className="list-disc ml-6">
-                                {question.options.map((option, index) => (
+                                {question?.options?.map((option, index) => (
                                     <li key={index}>{option}</li>
                                 ))}
                             </ul>
@@ -75,7 +75,7 @@ const MangeQuestion = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-bold mb-2">Options:</label>
-                        {[0, 1, 2, 3].map((index) => (
+                        {[0, 1, 2, 3]?.map((index) => (
                             <input
                                 key={index}
                                 type="text"
