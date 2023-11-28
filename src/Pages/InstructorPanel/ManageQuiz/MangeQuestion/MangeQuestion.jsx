@@ -8,29 +8,51 @@ const MangeQuestion = () => {
     const { quizID } = useParams();
     const [axiosSecure] = useAxiosSecure();
     const { singleItem, refetch } = useSingleQuiz(quizID)
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const { questions } = singleItem;
-    console.log(questions);
+    console.log(singleItem);
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         console.log("New Question:", data);
-        const updatedQuestions = [...singleItem.questions, data];
-        const updatedQuizData = {
-            ...singleItem,
-            questions: updatedQuestions,
-        };
-        console.log("After Push New Question:", updatedQuizData);
-        const response = axiosSecure.patch(`/addQuestions/${quizID}`,updatedQuizData)
-        console.log("Response: ",response);
+
+        // Send only the new question data to the server
+        const response = await axiosSecure.patch(`/addQuestions/${quizID}`, data);
+        console.log("Response: ", response);
+        if (response.data.modifiedCount > 0) {
+            reset();
+            refetch();
+        }
     };
+
+    const handleDeleteQuestion = async (index) => {
+        try {
+            const updatedQuestions = [...questions];
+            const deletedQuestion = updatedQuestions.splice(index, 1)[0];
+
+            // Make a delete request to the server using the question's properties
+            const response = await axiosSecure.patch(`/deleteQuestion/${quizID}`, {
+                deletedQuestion,
+            });
+
+            console.log("Delete response:", response);
+
+            // Assuming you want to refetch the questions after deletion
+            refetch();
+        } catch (error) {
+            console.error("Error deleting question:", error);
+        }
+    };
+
+
+
     return (
         <div className="mx-5 my-10">
             <h2 className="text-2xl font-bold mb-4">Question List</h2>
 
             {questions?.length > 0 ?
-                questions.map((question) => (
-                    <div key={question.id} className="mb-6 p-4 border rounded-md shadow-md">
+                questions.map((question, index) => (
+                    <div key={index} className="mb-6 p-4 border rounded-md shadow-md">
                         <div className="mb-4">
                             <strong>Question:</strong> {question.questionText}
                         </div>
@@ -47,7 +69,7 @@ const MangeQuestion = () => {
                         </div>
                         <button
                             className="mt-4 bg-red-500 text-white py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
-                            onClick={() => handleDeleteQuestion(question.id)}
+                            onClick={() => handleDeleteQuestion(question.index)}
                         >
                             Delete
                         </button>
