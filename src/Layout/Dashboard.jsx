@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { FcMenu } from "react-icons/fc";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProviders";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGraduationCap, faIdCard, faImages, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { faGraduationCap, faHomeAlt, faIdCard } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
+    const location = useLocation();
     return (
         <div>
             <div className="drawer lg:drawer-open ">
@@ -38,11 +39,12 @@ const Dashboard = () => {
                                 <h3 className="font-Russo">{user?.email}</h3>
                             </div>
 
-                           
+
 
 
                         </div>
                         <div className="border border-gray-600 my-5"></div>
+
                         <li>
                             <Link
                                 className={`hover:text-white hover:bg-gray-500 hover:transition-colors hover:duration-500 ${location.pathname === '/dashboard/addQuiz' ? 'bg-gray-400 bg-opacity-40' : ''}`}
@@ -55,7 +57,13 @@ const Dashboard = () => {
                                 to="/dashboard/manageQuiz"><FontAwesomeIcon icon={faGraduationCap} /> Mange Quiz
                             </Link>
                         </li>
-                     
+                        
+                        <li>
+                            <Link
+                                className={`hover:text-white hover:bg-gray-500 hover:transition-colors hover:duration-500 ${location.pathname === '/' ? 'bg-gray-400 bg-opacity-40' : ''}`}
+                                to="/"><FontAwesomeIcon icon={faHomeAlt} />Home
+                            </Link>
+                        </li>
 
 
                     </ul>

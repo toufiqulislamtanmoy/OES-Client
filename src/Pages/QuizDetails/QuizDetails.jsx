@@ -32,13 +32,16 @@ const QuizDetails = () => {
 
         const countdownInterval = setInterval(() => {
             setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+            
         }, 1000);
 
 
         return () => {
             clearTimeout(initialTimeout);
             clearInterval(countdownInterval);
+           
         };
+        
     }, [singleItem]);
 
     const { control, handleSubmit } = useForm();

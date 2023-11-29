@@ -4,13 +4,15 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Provider/AuthProviders";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AddQuiz = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const {user} = useContext(AuthContext);
     const [axiosSecure] = useAxiosSecure();
+    const   navigate = useNavigate();
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         const quizData = {
             ...data,
             assignerEmail:user?.email,
@@ -19,10 +21,13 @@ const AddQuiz = () => {
             questions:[],
             status:false
          };
-        console.log(quizData)
+        
 
-        const response = axiosSecure.post("/addQuiz",quizData);
-        console.log(response.data);
+        const response = await axiosSecure.post("/addQuiz",quizData);
+        if(response.data.insertedId){
+            navigate('/dashboard/manageQuiz');
+            console.log("Inside the IF Block");
+        }
     }
     return (
         <div className="bg-gray-100 min-h-screen flex items-center justify-center">

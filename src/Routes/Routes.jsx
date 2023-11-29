@@ -14,6 +14,7 @@ import AddQuiz from "../Pages/InstructorPanel/AddQuiz/AddQuiz";
 import ManageQuiz from "../Pages/InstructorPanel/ManageQuiz/ManageQuiz";
 import Dashboard from "../Layout/Dashboard";
 import MangeQuestion from "../Pages/InstructorPanel/ManageQuiz/MangeQuestion/MangeQuestion";
+import DidNotComplete from "../Pages/DidNotComplete/DidNotComplete";
 
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "/ranking",
                 element: <RankingList />
+            },     
+            {
+                path: "/timeout",
+                element: <DidNotComplete />
             },     
         ]
     },
