@@ -7,7 +7,7 @@ const useAllQuiz = () => {
     const { data: quiz = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['quiz'],
         queryFn: async () => {
-            // const res = await fetch('http://localhost:5000/quiz');
+            // const res = await fetch('https://online-quiz-server.vercel.app/quiz');
             // return res.json();
             const response = await axiosSecure(`/quiz`)
             return response.data;

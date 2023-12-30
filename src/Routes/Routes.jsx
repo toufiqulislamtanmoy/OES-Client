@@ -41,11 +41,11 @@ const router = createBrowserRouter([
             },     
             {
                 path: "/quizdetails/:id",
-                element: <PrivetRoute><QuizDetails /></PrivetRoute>
+                element: <QuizDetails />
             },     
             {
                 path: "/quizscore",
-                element: <PrivetRoute><QuizScore /></PrivetRoute>
+                element: <QuizScore />
             },     
             {
                 path: "/ranking",
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <PrivetRoute><Dashboard /></PrivetRoute>,
+        element: <Dashboard />,
         // errorElement: <NotFound/>,
         children: [
             {

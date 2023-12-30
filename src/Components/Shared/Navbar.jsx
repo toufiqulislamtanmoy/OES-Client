@@ -1,31 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProviders";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useUserRole from "../../Hooks/useUserRole";
 
 const Navbar = () => {
-    const [axiosSecure] = useAxiosSecure();
+    const [role, refetch] = useUserRole();
     const { user, logout } = useContext(AuthContext);
-    const [userRole, setUserRole] = useState(false);
     const handelLogOut = async () => {
         logout();
 
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosSecure.get(`/users/admin/${user?.email}`);
-                setUserRole(response.data)
-                console.log('User Data:', userRole);
-
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchData();
-    }, [user?.email, axiosSecure, userRole]);
 
     console.log(user);
     const navitem = <>
@@ -78,14 +63,19 @@ const Navbar = () => {
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-primary rounded-box w-52">
                                 <li>
-                                    { userRole?.admin &&
-                                        <Link to="/dashboard/addQuiz" className="justify-between">
-                                            Profile
-                                            <span className="badge">New</span>
-                                        </Link>
+                                    {
+                                        role?.role === 'admin' &&
+
+                                        <li>
+                                            <Link to="/dashboard/addQuiz" className="">
+                                                Admin Panel
+                                            </Link>
+                                        </li>
+
+
                                     }
                                 </li>
-                                <li><a>Settings</a></li>
+
                                 <li><button onClick={handelLogOut}>Logout</button></li>
                             </ul>
                         </div>

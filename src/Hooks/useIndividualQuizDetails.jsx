@@ -9,7 +9,7 @@ const useIndividualQuizDetails = () => {
     const { data: indquiz = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['indquiz'],
         queryFn: async () => {
-            // const res = await fetch('http://localhost:5000/indquiz');
+            // const res = await fetch('https://online-quiz-server.vercel.app/indquiz');
             // return res.json();
             const response = await axiosSecure(`/individualQuiz/${user?.email}`)
             return response.data;

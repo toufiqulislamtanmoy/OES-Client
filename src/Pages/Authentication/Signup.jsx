@@ -48,7 +48,7 @@ const Signup = () => {
                         }
                         /********Insert user details in the database********/
 
-                        fetch('http://localhost:5000/adduser', {
+                        fetch('https://online-quiz-server.vercel.app/adduser', {
                             method: "POST",
                             headers: {
                                 'content-type': 'application/json'

@@ -6,7 +6,7 @@ import { AuthContext } from '../Provider/AuthProviders';
 
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:5000', 
+  baseURL: 'https://online-quiz-server.vercel.app', 
 });
 
 

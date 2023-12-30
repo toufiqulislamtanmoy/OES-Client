@@ -7,7 +7,7 @@ const useLeadarBoard = () => {
     const { data: leaderboard = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['leaderboard'],
         queryFn: async () => {
-            // const res = await fetch('http://localhost:5000/leaderboard');
+            // const res = await fetch('https://online-quiz-server.vercel.app/leaderboard');
             // return res.json();
             const response = await axiosSecure(`/leaderboard`)
             return response.data;

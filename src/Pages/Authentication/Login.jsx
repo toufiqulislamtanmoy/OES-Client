@@ -27,7 +27,7 @@ const Login = () => {
                 profile_pic: user.photoURL,
                 role: "user"
             }
-            fetch("http://localhost:5000/adduser", {
+            fetch("https://online-quiz-server.vercel.app/adduser", {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'
